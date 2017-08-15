@@ -1,0 +1,115 @@
+[
+	{
+		"title": "Apple Crisp",
+		"gdoc": "https://docs.google.com/document/d/1xr7qhE7lNyqC2_hile5nSt7b1uQrtrxQNdGvZdKXilw/edit",
+		"ingredients": [
+			"apples, fresh",
+			"lemon juice",
+			"cinnamon",
+			"nutmeg",
+			"sugar, white",
+			"sugar, brown",
+			"butter"
+		]
+	}, {
+		"title": "Cashew Chicken (Simplified)",
+		"gdoc": "https://docs.google.com/document/d/11xjXjto6Fo-9En7vmECPv7LiKe1CfxydtFdoMt3qwkc/edit",
+		"ingredients": [
+			"chicken breasts",
+			"corn starch",
+			"ginger",
+			"garlic",
+			"oil, vegetable",
+			"sauce, hoisin"
+		]
+	}, {
+		"title": "Macaroni & Cheese",
+		"gdoc": "https://docs.google.com/document/d/1usD6pGAt3b91oZOdS1dybiNr13AT_5Q_sWFBiMMx-mo/edit",
+		"ingredients": [
+			"macaroni",
+			"milk",
+			"salt",
+			"pepper, black",
+			"cheese, cheddar",
+			"eggs"
+		]
+	}, {
+		"title": "Matzah Brie",
+		"gdoc": "https://docs.google.com/document/d/1-kL7sF_KcwDSlILjQM0RJ8wEX1m-wFMgMOtEcznDJqw/edit",
+		"ingredients": [
+			"matzah",
+			"milk",
+			"salt",
+			"eggs"
+		]
+	}, {
+		"title": "Mongolian Beef (or other meat)",
+		"gdoc": "https://docs.google.com/document/d/1Stt1B_Avf3z1okDbXFRXROOqT-_xi4vD46jOuYWmzHE/edit",
+		"ingredients": [
+			"scallions",
+			"sauce, soy",
+			"ginger",
+			"garlic",
+			"pepper, red",
+			"corn starch",
+			"sugar, brown",
+			"oil, vegetable"
+		]
+	}, {
+		"title": "Orange Chicken",
+		"gdoc": "https://docs.google.com/document/d/1fzC5WqVJgI44CjngXHkHhLbYm3dm_D0awGQlXiGuMlM/edit",
+		"ingredients": [
+			"chicken breasts",
+			"salt",
+			"pepper, black",
+			"oil, olive",
+			"garlic",
+			"orange juice",
+			"honey",
+			"sauce, soy",
+			"vinegar, rice",
+			"corn starch",
+			"ginger",
+			"pepper, red"
+		]
+	}, {
+		"title": "Pan-Grilled Chicken",
+		"gdoc": "https://docs.google.com/document/d/1x6ABn2psfQCzhJtSiU7WkW70JHBFu42HJ3Sc0Ndkemo/edit",
+		"ingredients": [
+			"chicken breasts",
+			"oil, vegetable",
+			"salt",
+			"pepper, black",
+			"garlic powder"
+		]
+	}, {
+		"title": "Tuna Noodle Casserole",
+		"gdoc": "https://docs.google.com/document/d/1Gb-qPJ_y1xq9pF0hZ3wLk_qlvveu5GSeLGBSli8BRLs/edit",
+		"ingredients": [
+			"egg noodles",
+			"tuna, canned",
+			"soup, cream of mushroom"
+		]
+	}, {
+		"title": "Turkey Burgers",
+		"gdoc": "https://docs.google.com/document/d/1v7ySjrGEm5ylS90XhK63GwLaoJuO8EWDlToTvWdjOxc/edit",
+		"ingredients": [
+			"turkey, ground",
+			"sauce, soy",
+			"sauce, worcestershire"
+		]
+	}, {
+		"title": "Very Berry Pancakes",
+		"gdoc": "https://docs.google.com/document/d/14Fo5RC1UMQP2ROP-IXXMoN-1KeKRTUCNyZuhJAaKoPU/edit",
+		"ingredients": [
+			"eggs",
+			"milk",
+			"sugar, brown",
+			"oats",
+			"salt",
+			"flour, white",
+			"flour, whole wheat",
+			"baking powder"
+		]
+	}
+]

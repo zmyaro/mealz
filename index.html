@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<title>MealZ</title>
+		
+		<link rel="stylesheet" type="text/css" href="material-elements.css" />
+		<link rel="stylesheet" type="text/css" href="material-depth.css" />
+		<link rel="stylesheet" type="text/css" href="material-widgets.css" />
+		<script type="text/javascript" src="material-touch.js"></script>
+		
+		<!-- jQuery is required for the Trello JS library :\ -->
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="https://api.trello.com/1/client.js?key=720ef2a8a7f410f9e7e4559528e0c7a9"></script>
+		
+		<script type="text/javascript">
+			var GROCERIES_BOARD_ID = 'uO26DySr',
+				INGREDIENT_LIST_IDS = [
+					'55a407adb097a7f1fb8e1c25',
+					'55a407b199712e482a4a342d'
+				],
+				TRELLO_CARDS_GET_URL = '/boards/' + GROCERIES_BOARD_ID + '/cards',
+				RECIPES_JSON_URL = 'recipes.json';
+			
+			var ingredients = [],
+				recipes,
+				authBtn,
+				progressBar;
+			
+			window.onload = function () {
+				authBtn = document.getElementById('authBtn');
+				progressBar = document.getElementById('progressBar');
+				
+				authBtn.onclick = function () {
+					authBtn.disabled = true;
+					progressBar.style.display = 'inline-block';
+					progressBar.value = 0;
+					
+					Trello.authorize({
+						type: 'popup',
+						name: 'MealZ',
+						persist: true,
+						interactive: true,
+						scope: {
+							read: true,
+							write: false,
+							account: false
+						},
+						expiration: 'never',
+						success: handleAuthSuccess,
+						error: handleAuthFailure
+					});
+				};
+			};
+			
+			function handleAuthFailure(err) {
+				if (typeof(err) !== 'undefined') {
+					console.error(err);
+				}
+				alert('Failed to authorize :(');
+			}
+			function handleIngredientsFailure(err) {
+				if (typeof(err) !== 'undefined') {
+					console.error(err);
+				}
+				alert('Failed to get ingredients list :(');
+			}
+			function handleRecipesFailure(err) {
+				if (typeof(err) !== 'undefined') {
+					console.error(err);
+				}
+				alert('Failed to get recipes :(');
+			}
+			
+			function handleAuthSuccess() {
+				authBtn.disabled = true;
+				progressBar.value = 1;
+				
+				Trello.get(TRELLO_CARDS_GET_URL, {}, handleIngredientsSuccess, handleIngredientsFailure);
+			}
+			function handleIngredientsSuccess(items) {
+				progressBar.value = 2;
+				
+				items.forEach(function (item) {
+					if (INGREDIENT_LIST_IDS.indexOf(item.idList) !== -1) {
+						ingredients.push(item.name.toLowerCase());
+					}
+				});
+				
+				progressBar.value = 3;
+				
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', RECIPES_JSON_URL, true);
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4) {
+						if (xhr.status === 200) {
+							handleRecipesSuccess(xhr.responseText);
+						} else {
+							handleRecipesFailure(xhr);
+						}
+					}
+				};
+				xhr.send();
+			}
+			function handleRecipesSuccess(recipesJSON) {
+				progressBar.value = 4;
+				
+				try {
+					recipes = JSON.parse(recipesJSON);
+				} catch (e) {
+					handleRecipesFailure(e);
+				}
+				
+				progressBar.value = 5;
+				
+				var list = document.getElementById('recipesList');
+				recipes.forEach(function (recipe) {
+					var canMake = true;
+					recipe.ingredients.forEach(function (ingredient) {
+						if (ingredients.indexOf(ingredient) === -1) {
+							canMake = false;
+						}
+					});
+					if (canMake) {
+						var newItem = document.createElement('li');
+						if (recipe.gdoc) {
+							var newLink = document.createElement('a');
+							newLink.textContent = recipe.title;
+							newLink.href = recipe.gdoc;
+							newLink.target = '_blank';
+							newItem.appendChild(newLink);
+						} else {
+							newItem.textContent = recipe.title;
+						}
+						list.appendChild(newItem);
+					}
+				});
+				
+				progressBar.value = 6;
+				
+				// Hide the progress bar.
+				document.getElementById('progressBar').style.display = 'none';
+			}
+		</script>
+		<style type="text/css">
+			html {
+				background-color: #e8e8e8;
+			}
+			body.card {
+				max-width: 512px;
+				margin: auto;
+				text-align: center;
+			}
+			#progressBar {
+				display: none;
+			}
+			#recipesList {
+				margin: auto;
+				text-align: left;
+			}
+		</style>
+	</head>
+	<body class="card z1">
+		<button class="z1" id="authBtn">Authenticate with Trello</button>
+		<br /><br />
+		<progress id="progressBar" min="0" max="6"></progress>
+		<ul id="recipesList"></ul>
+	</body>
+</html>
