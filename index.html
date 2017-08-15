@@ -32,26 +32,32 @@
 				authBtn = document.getElementById('authBtn');
 				progressBar = document.getElementById('progressBar');
 				
-				authBtn.onclick = function () {
-					authBtn.disabled = true;
-					progressBar.style.display = 'inline-block';
-					progressBar.value = 0;
-					
-					Trello.authorize({
-						type: 'popup',
-						name: 'MealZ',
-						persist: true,
-						interactive: true,
-						scope: {
-							read: true,
-							write: false,
-							account: false
-						},
-						expiration: 'never',
-						success: handleAuthSuccess,
-						error: handleAuthFailure
-					});
+				var trelloAuthParams = {
+					type: 'popup',
+					name: 'MealZ',
+					persist: true,
+					interactive: false,
+					scope: {
+						read: true,
+						write: false,
+						account: false
+					},
+					expiration: 'never',
+					success: handleAuthSuccess,
+					error: function () {
+						// If silent auth fails, try interactive auth.
+						trelloAuthParams.interactive = true;
+						authBtn.onclick = function () {
+							authBtn.disabled = true;
+							progressBar.value = 0;
+							
+							Trello.authorize(trelloAuthParams);
+						};
+						authBtn.style.display = 'inline-block';
+					}
 				};
+				
+				Trello.authorize(trelloAuthParams);
 			};
 			
 			function handleAuthFailure(err) {
@@ -74,7 +80,7 @@
 			}
 			
 			function handleAuthSuccess() {
-				authBtn.disabled = true;
+				authBtn.style.display = 'none';
 				progressBar.value = 1;
 				
 				Trello.get(TRELLO_CARDS_GET_URL, {}, handleIngredientsSuccess, handleIngredientsFailure);
@@ -152,7 +158,7 @@
 				margin: auto;
 				text-align: center;
 			}
-			#progressBar {
+			#authBtn {
 				display: none;
 			}
 			#recipesList {
@@ -162,9 +168,8 @@
 		</style>
 	</head>
 	<body class="card z1">
-		<button class="z1" id="authBtn">Authenticate with Trello</button>
-		<br /><br />
 		<progress id="progressBar" min="0" max="6"></progress>
+		<button class="z1" id="authBtn">Authenticate with Trello</button>
 		<ul id="recipesList"></ul>
 	</body>
 </html>
